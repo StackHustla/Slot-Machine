@@ -105,7 +105,7 @@ const transpose = (reels) => {
         }
     }
     return rows;
-}
+};
 
 const printRows = (rows) => {
     for (const row of rows) {
@@ -118,7 +118,7 @@ const printRows = (rows) => {
         }
         console.log(rowString);
     }
-}
+};
 
 const getWinnings = (rows, bet, lines) => {
     let winnings = 0;
@@ -138,18 +138,35 @@ const getWinnings = (rows, bet, lines) => {
         }
     }
     return winnings;
-}
+};
 
-let balance = deposit();
-const numberOfLines = getNumberOfLines();
-const bet = getBet(balance, numberOfLines);
-const reels = spin();
-const rows = transpose(reels);
+const game = () => {
+    let balance = deposit();
 
-console.log(reels);
-console.log(rows);
-console.log("$" + balance);
-console.log("Betting lines: " + numberOfLines);
-printRows(rows);
-const winnings = getWinnings(rows, bet, numberOfLines);
-console.log("you won, $" + winnings.toString());
+    while (true) {
+        console.log("you have a balance of $" + balance);
+        const numberOfLines = getNumberOfLines();
+        const bet = getBet(balance, numberOfLines);
+        balance -= bet * numberOfLines;
+        const reels = spin();
+        const rows = transpose(reels);
+
+        /* console.log(reels);
+        console.log(rows); */
+
+        printRows(rows);
+        const winnings = getWinnings(rows, bet, numberOfLines);
+        console.log("you won, $" + winnings.toString());
+        balance += winnings;
+
+        if (balance <= 0) {
+            console.log("you are broke homie");
+            break;
+        }
+
+        const playAgain = prompt("Do you want to play again (y/n)? ");
+
+        if (playAgain != "y") break; /* if its a one line body you don't need curly brackets */
+    }
+};
+game();
