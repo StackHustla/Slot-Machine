@@ -166,7 +166,9 @@ const game = () => {
 
         const playAgain = prompt("Do you want to play again (y/n)? ");
 
-        if (playAgain != "y") break; /* if its a one line body you don't need curly brackets */
+        if (playAgain != "y") {
+            console.log("you're walking out with: $" + balance);
+            break;} /* if its a one line body you don't need curly brackets */
     }
 };
 game();
